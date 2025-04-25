@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>About Me</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: #fff0f5;
+      color: #5C4033;
+    }
+
+    .navbar {
+      background-color: #f5deb3;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 24px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #5C4033;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .navbar button {
+      background-color: #d8a48f;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .navbar button:hover {
+      background-color: #c98f77;
+    }
+
+    .banner {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      display: block;
+      margin-bottom: 40px;
+    }
+
+    .section-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 40px auto;
+      max-width: 1000px;
+      gap: 30px;
+      padding: 0 20px;
+    }
+
+    .section-image-container {
+      flex: 1;
+      text-align: center;
+    }
+
+    .section-image-container h3 {
+      margin-bottom: 10px;
+      font-size: 22px;
+      color: #5C4033;
+    }
+
+    .section-image {
+      width: 100%;
+      max-width: 250px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 6px solid #f5deb3;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .section-text {
+      flex: 2;
+      font-size: 18px;
+      background-color: #ffe4e1;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 2px 2px 12px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <div class="navbar">
+    <div class="logo">YourName</div>
+    <div class="nav-buttons">
+      <button onclick="location.href='index.html'">Home</button>
+      <button>About Me</button>
+      <button>Chat</button>
+    </div>
+  </div>
+
+  <!-- Big Banner Image -->
+  <img class="banner" src="https://www.shutterstock.com/image-photo/cute-kittent-eating-his-meal-260nw-1542754199.jpg" alt="Banner Image">
+
+  <!-- Section 1: Education -->
+  <div class="section-row">
+    <div class="section-image-container">
+      <h3>My Education</h3>
+      <img class="section-image" src="https://media.4-paws.org/f/8/0/5/f8055215b5cdc5dee5494c255ca891d7b7d33cd1/Molly_006-2829x1886-2726x1886.jpg" alt="Education">
+    </div>
+    <div class="section-text">
+      <p>
+        I’ve always loved learning and exploring new things! 📚  
+        From school days filled with creativity and curiosity to challenging myself with exciting subjects,  
+        my educational journey has helped shape who I am today. I especially love art, storytelling, and coding!
+      </p>
+    </div>
+  </div>
+
+  <!-- Section 2: Hobbies -->
+  <div class="section-row">
+    <div class="section-image-container">
+      <h3>My Hobbies</h3>
+      <img class="section-image" src="https://via.placeholder.com/250x250/ffc0cb/5C4033?text=Painting" alt="Hobbies">
+    </div>
+    <div class="section-text">
+      <p>
+        I enjoy painting, journaling, listening to soft music, and making aesthetic things.  
+        On cozy days, you’ll find me with a cup of tea and sketchbook in hand. ☕🎨✨  
+        I also like writing little poems and doodling in the margins of my notebooks.
+      </p>
+    </div>
+  </div>
+
+  <!-- Section 3: Passions -->
+  <div class="section-row">
+    <div class="section-image-container">
+      <h3>My Passions</h3>
+      <img class="section-image" src="https://via.placeholder.com/250x250/d8a48f/ffffff?text=Design" alt="Passions">
+    </div>
+    <div class="section-text">
+      <p>
+        I’m passionate about designing beautiful, meaningful things — websites, stationery, art boards,  
+        and anything that brings joy to someone’s day. I love combining tech and creativity!  
+        I'm also curious about psychology and how emotions influence design.
+      </p>
+    </div>
+  </div>
+
+  <!-- Section 4: Goals -->
+  <div class="section-row">
+    <div class="section-image-container">
+      <h3>My Goals</h3>
+      <img class="section-image" src="https://via.placeholder.com/250x250/ffe4e1/5C4033?text=Dreams" alt="Goals">
+    </div>
+    <div class="section-text">
+      <p>
+        My dream is to create something magical — a cute app, a helpful blog, maybe even a storybook!  
+        I want to inspire others through creativity and kindness. 💕  
+        One step at a time, I’m working toward becoming the person I imagine in my dreams.
+      </p>
+    </div>
+  </div>
+
+</body>
+</html>
