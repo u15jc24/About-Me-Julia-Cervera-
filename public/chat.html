@@ -1,39 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Socket.io simple chat</title>
-    <link rel="stylesheet" href="/css/demo.css" />
-  </head>
-  <body>
-    <div class="sidenav">
-        <div class="inbox__people">
-            <h4>Active users</h4>
-          </div>
+<head>
+  <meta charset="UTF-8">
+  <title>Chat</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: #fff0f5;
+      color: #5C4033;
+    }
 
-      </div>
-      
-      
-      <br>
-      <hr>
-      <div class="content">
-        <div class="messages__history"></div>
-          <div class="fallback"></div>
-        <div class="inbox__messages">
-            
-          
-        </div>
+    .navbar {
+      background-color: #f5deb3;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 24px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
 
-        <form class="message_form">
-            <input type="text" class="message_form__input" placeholder="Type a message" />
-            <button class="message_form__button" type="submit">
-              Enter
-            </button>
-          </form>
-      </div>
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #5C4033;
+    }
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/client.js"></script>
-  </body>
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .navbar button {
+      background-color: #d8a48f;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .navbar button:hover {
+      background-color: #c98f77;
+    }
+
+    .status {
+      padding: 10px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .online {
+      color: green;
+    }
+
+    .offline {
+      color: red;
+    }
+
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      max-width: 700px;
+      margin: 30px auto;
+      background-color: #ffe4e1;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .messages {
+      height: 300px;
+      overflow-y: auto;
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #f5deb3;
+    }
+
+    .message {
+      margin-bottom: 10px;
+    }
+
+    .message.you {
+      text-align: right;
+      color: #d17b7b;
+    }
+
+    .message.other {
+      text-align: left;
+      color: #5C4033;
+    }
+
+    .input-container {
+      display: flex;
+      gap: 10px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 15px;
+      border: 1px solid #d8a48f;
+    }
+
+    button.send-btn {
+      padding: 10px 16px;
+      font-size: 16px;
+      border-radius: 15px;
+      background-color: #d8a48f;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button.send-btn:hover {
+      background-color: #c98f77;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="logo">YourName</div>
+    <div class="nav-buttons">
+      <button onclick="location.href='index.html'">Home</button>
+      <button onclick="location.href='about.html'">About Me</button>
+      <button onclick="location.href='chat.html'">Chat</button>
+    </div>
+  </div>
+
+  <div class="status" id="status">Checking connection...</div>
+
+  <!-- Chat Container -->
+  <div class="chat-container">
+    <div class="messages" id="messages"></div>
+    <div class="input-container">
+      <input type="text" id="messageInput" placeholder="Type your message...">
+      <button class="send-btn" onclick="sendMessage()">💌</button>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const statusEl = document.getElementById("status");
+    const messagesEl = document.getElementById("messages");
+    const messageInput = document.getElementById("messageInput");
+
+    socket.on("connect", () => {
+      statusEl.innerHTML = '<span class="online">🟢 You are online</span>';
+    });
+
+    socket.on("disconnect", () => {
+      statusEl.innerHTML = '<span class="offline">🔴 You are offline</span>';
+    });
+
+    socket.on("chat message", (data) => {
+      const msgEl = document.createElement("div");
+      msgEl.classList.add("message", data.from === socket.id ? "you" : "other");
+      msgEl.textContent = data.text;
+      messagesEl.appendChild(msgEl);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    });
+
+    function sendMessage() {
+      const msg = messageInput.value.trim();
+      if (msg !== "") {
+        socket.emit("chat message", msg);
+        messageInput.value = "";
+      }
+    }
+
+    // Optional: Press Enter to send
+    messageInput.addEventListener("keypress", function (e) {
+      if (e.key === "Enter") sendMessage();
+    });
+  </script>
+
+</body>
 </html>

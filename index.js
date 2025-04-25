@@ -1,40 +1,22 @@
 const express = require("express");
-const socket = require("socket.io");
-
-// App setup
-const PORT = 5000;
 const app = express();
-const server = app.listen(PORT, function () {
-  console.log(`Listening on port ${PORT}`);
+const http = require("http").createServer(app);
+const io = require("socket.io")(http);
 
+app.use(express.static(__dirname + "/public")); // Serve your HTML from /public
+
+io.on("connection", (socket) => {
+  console.log("A user connected:", socket.id);
+
+  socket.on("chat message", (msg) => {
+    io.emit("chat message", { text: msg, from: socket.id });
+  });
+
+  socket.on("disconnect", () => {
+    console.log("User disconnected:", socket.id);
+  });
 });
 
-// Static files
-app.use(express.static("public"));
-
-// Socket setup
-const io = socket(server);
-
-//we use a set to store users, sets objects are for unique values of any type
-const activeUsers = new Set();
-
-io.on("connection", function (socket) {
-  console.log("Made socket connection");
-
-  socket.on("new user", function (data) {
-    socket.userId = data;
-    activeUsers.add(data);
-    //... is the the spread operator, adds to the set while retaining what was in there already
-    io.emit("new user", [...activeUsers]);
-  });
-
-  socket.on("disconnect", function () {
-      activeUsers.delete(socket.userId);
-      io.emit("user disconnected", socket.userId);
-    });
-
-    socket.on("chat message", function (data) {
-      io.emit("chat message", data);
-  });
-
+http.listen(3000, () => {
+  console.log("Server listening on http://localhost:3000");
 });
