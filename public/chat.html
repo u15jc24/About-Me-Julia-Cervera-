@@ -39,6 +39,7 @@
       border-radius: 20px;
       cursor: pointer;
       font-size: 16px;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
     }
 
     .navbar button:hover {
@@ -93,7 +94,25 @@
       text-align: left;
       color: #5C4033;
     }
+    .welcome-message {
+      text-align: center;
+      margin: 20px;
+      font-size: 18px;
+      color: #5C4033;
+      opacity: 0;
+      animation: fadeIn 2s ease forwards;
+    }
 
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
     .input-container {
       display: flex;
       gap: 10px;
@@ -126,13 +145,19 @@
 
   <!-- Navbar -->
   <div class="navbar">
-    <div class="logo">YourName</div>
+    <div class="logo">Julia Cervera</div>
     <div class="nav-buttons">
       <button onclick="location.href='index.html'">Home</button>
       <button onclick="location.href='about.html'">About Me</button>
       <button onclick="location.href='chat.html'">Chat</button>
     </div>
   </div>
+
+<div style="text-align:center; margin: 20px; font-size: 18px; color: #5C4033;">
+  <p><strong>Chat With Me!</strong> </p>
+  <p>Feel free to send a message — whether you want to chat about science, university life, or just say hello.<br>
+  I love hearing different perspectives and learning from others, and I'm always open to new conversations. 🌸</p>
+</div>
 
   <div class="status" id="status">Checking connection...</div>
 
@@ -141,46 +166,14 @@
     <div class="messages" id="messages"></div>
     <div class="input-container">
       <input type="text" id="messageInput" placeholder="Type your message...">
-      <button class="send-btn" onclick="sendMessage()">💌</button>
+      <button class="send-btn" id="sendButton">💌</button>
     </div>
   </div>
 
   <script src="/socket.io/socket.io.js"></script>
-  <script>
-    const socket = io();
-    const statusEl = document.getElementById("status");
-    const messagesEl = document.getElementById("messages");
-    const messageInput = document.getElementById("messageInput");
 
-    socket.on("connect", () => {
-      statusEl.innerHTML = '<span class="online">🟢 You are online</span>';
-    });
+  <script src="/js/client.js"></script>
 
-    socket.on("disconnect", () => {
-      statusEl.innerHTML = '<span class="offline">🔴 You are offline</span>';
-    });
-
-    socket.on("chat message", (data) => {
-      const msgEl = document.createElement("div");
-      msgEl.classList.add("message", data.from === socket.id ? "you" : "other");
-      msgEl.textContent = data.text;
-      messagesEl.appendChild(msgEl);
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-    });
-
-    function sendMessage() {
-      const msg = messageInput.value.trim();
-      if (msg !== "") {
-        socket.emit("chat message", msg);
-        messageInput.value = "";
-      }
-    }
-
-    // Optional: Press Enter to send
-    messageInput.addEventListener("keypress", function (e) {
-      if (e.key === "Enter") sendMessage();
-    });
-  </script>
 
 </body>
 </html>

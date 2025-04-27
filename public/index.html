@@ -40,6 +40,7 @@
       border-radius: 20px;
       cursor: pointer;
       font-size: 16px;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
     }
 
     .navbar button:hover {
@@ -107,13 +108,35 @@
     .right-arrow {
       right: 10px;
     }
+    /* Responsive design */
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column; /* Stack the sections vertically on smaller screens */
+    align-items: center;
+  }
+
+  .text-section {
+    flex: none; /* Allow the text section to take up full width */
+    width: 90%; /* Add some padding on small screens */
+    padding-right: 0; /* Remove right padding */
+  }
+
+  .carousel-section {
+    flex: none;
+    width: 90%; /* Adjust width to fit the screen */
+  }
+
+  .carousel-images img {
+    height: auto; /* Ensure images maintain aspect ratio on smaller screens */
+  }
+}
   </style>
 </head>
 <body>
 
   <!-- Navbar -->
   <div class="navbar">
-    <div class="logo">YourName</div> <!-- <-- Change this to your actual name -->
+    <div class="logo">Julia Cervera</div> <!-- <-- Change this to your actual name -->
     <div class="nav-buttons">
       <button onclick="location.href='index.html'">Home</button>
     <button onclick="location.href='aboutme.html'">About Me</button>
@@ -126,19 +149,20 @@
     <div class="text-section">
       <h2>About Me 💖</h2>
       <p>
-        Hii! I'm someone who loves soft aesthetics, warm colors, and creative projects!  
-        Whether it's building cute websites, designing graphics, or just daydreaming over coffee and clouds,  
-        I love bringing a bit of joy into everything I make. 🎀🌸✨  
-        This little page is my cozy corner — thanks for visiting!
+        I'm a 19-year-old student currently studying Biomedical Sciences at the University of Aberdeen.
+        I grew up between Barcelona, Spain, and Toronto, Canada, which gave me the chance to experience different cultures, languages, and ways of thinking from an early age.
+        I’m fluent in Spanish, English, and Catalan, and I can also speak some French.
+        I love meeting new people, exploring new ideas, and I'm always looking for ways to combine my passions for science, technology, and problem-solving.
+        Right now, I'm excited about the future — about how science and innovation can work together to make real changes in the world.
       </p>
     </div>
 
     <div class="carousel-section">
       <button class="arrow left-arrow" onclick="changeSlide(-1)">&#10094;</button>
       <div class="carousel-images" id="carousel">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAv-ZG62zHi3_NZnCcvQVa_P8qG8l7Eo3A6aKPhWcMv6jA5n9JvR-KabZHTEvHwbybOeKIXJTaT3QNPRMHuOVB0h_EQXhEr-oREWfNZA" alt="Image 1">
-        <img src="https://www.prodograw.com/wp-content/uploads/2023/11/puppy-1207816_1280-800x800.jpg" alt="Image 2">
-        <img src="https://www.animalhumanesociety.org/sites/default/files/styles/scale_width_960/public/media/image/2019-05/Puppy.jpg?itok=gz4ofVfL" alt="Image 3">
+        <img src="images/sun.jpg" alt="Image 1">
+        <img src="images/sunglasses.jpg" alt="Image 2">
+        <img src="images/horse.jpg" alt="Image 3">
       <button class="arrow right-arrow" onclick="changeSlide(1)">&#10095;</button>
     </div>
   </div>
