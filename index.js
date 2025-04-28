@@ -22,32 +22,59 @@ app.get('/chat.html', (req, res) => {
   res.sendFile(__dirname + '/public/chat.html');
 });
 
+// Store connected users
+const users = new Map();
+
 // Socket.io connections
 io.on('connection', (socket) => {
   console.log('🔵 A user connected');
-  socket.broadcast.emit('activity', '🌟 A new user has joined the chat!');
+  
+  // Generate a random username for the user
+  const username = `User-${Math.floor(Math.random() * 1000)}`;
+  users.set(socket.id, username);
+  
+  // Notify everyone about the new connection
+  io.emit('activity', {
+    type: 'notification',
+    text: `🌟 ${username} has joined the chat!`
+  });
+
+  // Send the user their username
+  socket.emit('user connected', username);
 
   // Handle chat messages
   socket.on('chat message', (msg) => {
-    console.log('Received message:', msg);  // Log the received message
-    io.emit('chat message', msg);  // Broadcast the message to all clients
+    console.log('Received message:', msg);
+    
+    // Broadcast the message to all clients with username
+    io.emit('chat message', {
+      text: msg.text,
+      user: users.get(socket.id),
+      timestamp: new Date().toLocaleTimeString()
+    });
   });
 
   // Handle typing events
   socket.on('typing', () => {
-    console.log('Someone is typing...');
-    socket.broadcast.emit('typing');  // Notify other users that someone is typing
+    socket.broadcast.emit('typing', {
+      user: users.get(socket.id)
+    });
   });
 
   socket.on('stop typing', () => {
-    console.log('Typing stopped...');
-    socket.broadcast.emit('stop typing');  // Notify other users that typing has stopped
+    socket.broadcast.emit('stop typing');
   });
 
   // Handle user disconnect
   socket.on('disconnect', () => {
     console.log('🔴 A user disconnected');
-    socket.broadcast.emit('activity', '👋 A user has left the chat.');
+    const disconnectedUser = users.get(socket.id);
+    users.delete(socket.id);
+    
+    io.emit('activity', {
+      type: 'notification',
+      text: `👋 ${disconnectedUser} has left the chat.`
+    });
   });
 });
 

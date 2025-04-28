@@ -72,28 +72,78 @@
     }
 
     .messages {
-      height: 300px;
+      height: 400px;
       overflow-y: auto;
       background-color: #fff;
-      padding: 10px;
+      padding: 15px;
       border-radius: 10px;
       margin-bottom: 15px;
       border: 1px solid #f5deb3;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
     .message {
-      margin-bottom: 10px;
+      max-width: 70%;
+      padding: 10px 15px;
+      border-radius: 18px;
+      word-wrap: break-word;
+      position: relative;
+      line-height: 1.4;
     }
 
     .message.you {
-      text-align: right;
-      color: #d17b7b;
+      align-self: flex-end;
+      background-color: #d8a48f;
+      color: white;
+      border-bottom-right-radius: 5px;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
     }
 
     .message.other {
-      text-align: left;
+      align-self: flex-start;
+      background-color: #f5deb3;
       color: #5C4033;
+      border-bottom-left-radius: 5px;
+      box-shadow: -2px 2px 5px rgba(0,0,0,0.1);
     }
+
+    .message .username {
+      font-weight: bold;
+      font-size: 0.8em;
+      margin-bottom: 3px;
+    }
+
+    .message .timestamp {
+      font-size: 0.7em;
+      opacity: 0.7;
+      text-align: right;
+      margin-top: 4px;
+    }
+
+    .notification {
+      align-self: center;
+      background-color: #f0f0f0;
+      color: #666;
+      font-size: 0.9em;
+      padding: 5px 10px;
+      border-radius: 10px;
+      font-style: italic;
+      margin: 5px 0;
+    }
+
+    .typing-indicator {
+      align-self: flex-start;
+      background-color: #f0f0f0;
+      color: #666;
+      padding: 5px 10px;
+      border-radius: 10px;
+      font-size: 0.9em;
+      margin: 5px 0;
+      display: inline-block;
+    }
+
     .welcome-message {
       text-align: center;
       margin: 20px;
@@ -113,31 +163,61 @@
         transform: translateY(0);
       }
     }
+
     .input-container {
       display: flex;
       gap: 10px;
+      align-items: center;
     }
 
     input[type="text"] {
       flex: 1;
-      padding: 10px;
+      padding: 12px 15px;
       font-size: 16px;
-      border-radius: 15px;
+      border-radius: 20px;
       border: 1px solid #d8a48f;
+      background-color: #fff;
+      transition: border 0.3s;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #c98f77;
+      box-shadow: 0 0 5px rgba(217, 165, 143, 0.5);
     }
 
     button.send-btn {
-      padding: 10px 16px;
+      padding: 12px 20px;
       font-size: 16px;
-      border-radius: 15px;
+      border-radius: 20px;
       background-color: #d8a48f;
       color: white;
       border: none;
       cursor: pointer;
+      transition: background-color 0.3s;
     }
 
     button.send-btn:hover {
       background-color: #c98f77;
+    }
+
+    /* Scrollbar styling */
+    .messages::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .messages::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+    .messages::-webkit-scrollbar-thumb {
+      background: #d8a48f;
+      border-radius: 10px;
+    }
+
+    .messages::-webkit-scrollbar-thumb:hover {
+      background: #c98f77;
     }
   </style>
 </head>
@@ -153,11 +233,11 @@
     </div>
   </div>
 
-<div style="text-align:center; margin: 20px; font-size: 18px; color: #5C4033;">
-  <p><strong>Chat With Me!</strong> </p>
-  <p>Feel free to send a message — whether you want to chat about science, university life, or just say hello.<br>
-  I love hearing different perspectives and learning from others, and I'm always open to new conversations. 🌸</p>
-</div>
+  <div style="text-align:center; margin: 20px; font-size: 18px; color: #5C4033;">
+    <p><strong>Chat With Me!</strong> </p>
+    <p>Feel free to send a message — whether you want to chat about science, university life, or just say hello.<br>
+    I love hearing different perspectives and learning from others, and I'm always open to new conversations. 🌸</p>
+  </div>
 
   <div class="status" id="status">Checking connection...</div>
 
@@ -165,15 +245,13 @@
   <div class="chat-container">
     <div class="messages" id="messages"></div>
     <div class="input-container">
-      <input type="text" id="messageInput" placeholder="Type your message...">
-      <button class="send-btn" id="sendButton">💌</button>
+      <input type="text" id="messageInput" placeholder="Type your message..." autocomplete="off">
+      <button class="send-btn" id="sendButton">💌 Send</button>
     </div>
   </div>
 
   <script src="/socket.io/socket.io.js"></script>
-
   <script src="/js/client.js"></script>
-
 
 </body>
 </html>
